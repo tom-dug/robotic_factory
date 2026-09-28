@@ -11,6 +11,7 @@ import fr.tp.inf112.projects.canvas.model.Figure;
 import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.robotsim.model.shapes.PositionedShape;
 import fr.tp.inf112.projects.robotsim.model.shapes.RectangularShape;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Factory extends Component implements Canvas, Observable {
 
@@ -26,6 +27,8 @@ public class Factory extends Component implements Canvas, Observable {
 
 	private int pathResolution;
 
+	private ReentrantLock[][] locksMap;
+
 	public Factory(final int width,
 			final int height,
 			final String name,
@@ -36,6 +39,13 @@ public class Factory extends Component implements Canvas, Observable {
 		components = new ArrayList<>();
 		observers = null;
 		simulationStarted = false;
+		locksMap = new ReentrantLock[height/pathResolution][width/pathResolution];
+
+		for (int i = 0; i < height/pathResolution; i++) {
+			for (int j = 0; j < width/pathResolution; j++) {
+				locksMap[i][j] = new ReentrantLock();
+			}
+		}
 	}
 
 	protected List<Observer> getObservers() {
@@ -187,5 +197,9 @@ public class Factory extends Component implements Canvas, Observable {
 		}
 
 		return null;
+	}
+
+	public ReentrantLock[][] getLocksMap() {
+		return locksMap;
 	}
 }

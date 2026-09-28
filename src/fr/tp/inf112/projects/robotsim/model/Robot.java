@@ -4,6 +4,7 @@ import java.awt.DisplayMode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.canvas.model.impl.RGBColor;
@@ -123,25 +124,41 @@ public class Robot extends Component {
 	}
 
 	private int moveToNextPathPosition() {
-		synchronized (getFactory()) {
-			final Motion motion = computeMotion();
+		final int resolution = getFactory().getPathResolution();
+		int displacement = 0;
 
-			int displacement = motion == null ? 0 : motion.moveToTarget();
+		final Position targetPosition = getTargetPosition();
+		if (targetPosition == null) {
+			return 0;
+		}
+
+		final ReentrantLock targetLock = getFactory().getLocksMap()[targetPosition.getyCoordinate()
+				/ resolution][targetPosition.getxCoordinate() / resolution];
+
+		targetLock.lock();
+
+		try {
+			final Motion motion = computeMotion(targetPosition);
+			displacement = motion == null ? 0 : motion.moveToTarget();
 
 			if (displacement != 0) {
 				notifyObservers();
-			} else if (isLivelyLocked()) {
+			}
+
+			else if (isLivelyLocked()) {
 				final Position freeNeighbouringPosition = findFreeNeighbouringPosition();
 
 				if (freeNeighbouringPosition != null) {
-					nextPosition = freeNeighbouringPosition;
+					this.nextPosition = freeNeighbouringPosition;
 					displacement = moveToNextPathPosition();
 					computePathToCurrentTargetComponent();
 				}
 			}
-
-			return displacement;
+		} finally {
+			targetLock.unlock();
 		}
+
+		return displacement;
 	}
 
 	private Position findFreeNeighbouringPosition() {
@@ -192,16 +209,12 @@ public class Robot extends Component {
 		currentPathPositionsIter = currentPathPositions.iterator();
 	}
 
-	private Motion computeMotion() {
-		if (!currentPathPositionsIter.hasNext()) {
-
-			// There is no free path to the target
+	private Motion computeMotion(Position targetPosition) {
+		if (targetPosition == null) {
 			blocked = true;
-
 			return null;
 		}
 
-		final Position targetPosition = getTargetPosition();
 		final PositionedShape shape = new RectangularShape(targetPosition.getxCoordinate(),
 				targetPosition.getyCoordinate(),
 				2,
@@ -227,16 +240,21 @@ public class Robot extends Component {
 		// so it waited for another robot to pass. So try to move to this memorized
 		// position otherwise move to
 		// the next position from the path
-		if (this.blockedTargetPosition == null) {
-			return currentPathPositionsIter.next();
-		} else if (nextPosition != null) {
-			Position temp_nextPosition = nextPosition;
-			nextPosition = null;
+		if (this.nextPosition != null) {
+			Position temp_nextPosition = this.nextPosition;
+			this.nextPosition = null;
 			return temp_nextPosition;
-		} else {
+		}
+		
+		if (this.blockedTargetPosition != null) {
 			return this.blockedTargetPosition;
 		}
 
+		if (this.currentPathPositionsIter != null && this.currentPathPositionsIter.hasNext()) {
+			return this.currentPathPositionsIter.next();
+		}
+
+		return null;
 	}
 
 	public boolean isLivelyLocked() {

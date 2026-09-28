@@ -77,8 +77,8 @@ public class SimulatorApplication {
 		final Robot robot2 = new Robot(factory, customPathFinder, new CircularShape(45, 5, 2), new Battery(10), "Robot 2");
 		robot2.addTargetComponent(machine1);
 		robot2.addTargetComponent(machine2);
-		robot2.addTargetComponent(chargingStation);
 		robot2.addTargetComponent(conveyor1);
+		robot2.addTargetComponent(chargingStation);
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			  
