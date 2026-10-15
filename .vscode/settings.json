@@ -1,0 +1,7 @@
+{
+  "java.project.referencedLibraries": [
+    "libs/*.jar",
+    "libs/jgrapht/lib/jgrapht-core-1.5.2.jar",
+    "libs/jgrapht/lib/jheaps-0.14.jar"
+  ]
+}

@@ -11,4 +11,7 @@
 	<classpathentry kind="lib" path="libs/graph.jar"/>
 	<classpathentry kind="lib" path="libs/canvas-viewer.jar" sourcepath="libs/canvas-viewer.jar"/>
 	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="libs/jackson-annotations-2.17.2.jar"/>
+	<classpathentry kind="lib" path="libs/jackson-core-2.17.2.jar"/>
+	<classpathentry kind="lib" path="libs/jackson-databind-2.17.2.jar"/>
 </classpath>
