@@ -31,6 +31,10 @@ public abstract class Component implements Figure, Serializable, Runnable {
 		}
 	}
 
+	protected Component() {
+		this(null, null, null);
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -44,7 +48,8 @@ public abstract class Component implements Figure, Serializable, Runnable {
 	}
 
 	public Position getPosition() {
-		return getPositionedShape().getPosition();
+		PositionedShape shape = getPositionedShape();
+		return shape == null ? null : shape.getPosition();
 	}
 
 	protected Factory getFactory() {
@@ -53,11 +58,17 @@ public abstract class Component implements Figure, Serializable, Runnable {
 
 	@Override
 	public int getxCoordinate() {
-		return getPositionedShape().getxCoordinate();
+		PositionedShape shape = getPositionedShape();
+		return shape == null ? -1 : shape.getxCoordinate();
 	}
 
 	protected boolean setxCoordinate(int xCoordinate) {
-		if (getPositionedShape().setxCoordinate(xCoordinate)) {
+		PositionedShape shape = getPositionedShape();
+		if (shape == null) {
+			return false;
+		}
+		
+		if (shape.setxCoordinate(xCoordinate)) {
 			notifyObservers();
 
 			return true;
@@ -68,11 +79,17 @@ public abstract class Component implements Figure, Serializable, Runnable {
 
 	@Override
 	public int getyCoordinate() {
-		return getPositionedShape().getyCoordinate();
+		PositionedShape shape = getPositionedShape();
+		return shape == null ? -1 : shape.getyCoordinate();
 	}
 
 	protected boolean setyCoordinate(final int yCoordinate) {
-		if (getPositionedShape().setyCoordinate(yCoordinate)) {
+		PositionedShape shape = getPositionedShape();
+		if (shape == null) {
+			return false;
+		}
+
+		if (shape.setyCoordinate(yCoordinate)) {
 			notifyObservers();
 
 			return true;
@@ -82,7 +99,12 @@ public abstract class Component implements Figure, Serializable, Runnable {
 	}
 
 	protected void notifyObservers() {
-		getFactory().notifyObservers();
+		Factory factory = getFactory();
+		if (factory == null) {
+			return;
+		}
+		
+		factory.notifyObservers();
 	}
 
 	public String getName() {
@@ -97,11 +119,13 @@ public abstract class Component implements Figure, Serializable, Runnable {
 	}
 
 	public int getWidth() {
-		return getPositionedShape().getWidth();
+		PositionedShape posShape = getPositionedShape();
+		return posShape == null ? 0 : posShape.getWidth();
 	}
 
 	public int getHeight() {
-		return getPositionedShape().getHeight();
+		PositionedShape posShape = getPositionedShape();
+		return posShape == null ? 0 : posShape.getHeight();
 	}
 
 	public boolean behave() {
@@ -117,7 +141,8 @@ public abstract class Component implements Figure, Serializable, Runnable {
 	}
 
 	public boolean overlays(final PositionedShape shape) {
-		return getPositionedShape().overlays(shape);
+		PositionedShape posShape = getPositionedShape();
+		return posShape == null ? false : posShape.overlays(shape);
 	}
 
 	public boolean canBeOverlayed(final PositionedShape shape) {
@@ -135,7 +160,8 @@ public abstract class Component implements Figure, Serializable, Runnable {
 	}
 
 	public boolean isSimulationStarted() {
-		return getFactory().isSimulationStarted();
+		Factory factory = getFactory();
+		return factory == null ? false : factory.isSimulationStarted();
 	}
 
 	@Override

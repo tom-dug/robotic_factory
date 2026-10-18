@@ -48,6 +48,10 @@ public class Factory extends Component implements Canvas, Observable {
 		}
 	}
 
+	public Factory() {
+		this(0, 0, null, 1);
+	}
+
 	protected List<Observer> getObservers() {
 		if (observers == null) {
 			observers = new ArrayList<>();

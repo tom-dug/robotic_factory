@@ -62,6 +62,10 @@ public class Robot extends Component {
 		blockedTargetPosition = null;
 	}
 
+	public Robot() {
+		this(null, null, null, null, null);
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + " battery=" + battery + "]";

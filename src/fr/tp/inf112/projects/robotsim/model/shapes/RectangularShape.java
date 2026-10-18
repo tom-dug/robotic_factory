@@ -20,6 +20,10 @@ public class RectangularShape extends PositionedShape implements RectangleShape 
 		this.heigth = heigth;
 	}
 
+	public RectangularShape() {
+		this(-1, -1, 0, 0);
+	}
+
 	@Override
 	public int getWidth() {
 		return width;

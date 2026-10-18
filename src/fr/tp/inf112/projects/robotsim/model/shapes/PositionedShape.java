@@ -35,6 +35,10 @@ public abstract class PositionedShape implements Shape, Serializable {
 		this.position = new Position(xCoordinate, yCoordinate);
 	}
 
+	protected PositionedShape() {
+		this(-1, -1);
+	}
+
 	public abstract int getWidth();
 
 	public abstract int getHeight();

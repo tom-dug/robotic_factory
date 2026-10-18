@@ -89,6 +89,12 @@ public class Door extends Component {
 		this.room.addDoor(this);
 		this.open = open;
 	}
+
+	public Door() {
+		super();
+		this.room = null;
+		this.open = true;
+	}
 	
 	@Override
 	public Style getStyle() {
