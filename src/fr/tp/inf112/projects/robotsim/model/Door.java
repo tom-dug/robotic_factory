@@ -1,5 +1,7 @@
 package fr.tp.inf112.projects.robotsim.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.canvas.model.impl.RGBColor;
 import fr.tp.inf112.projects.robotsim.model.shapes.PositionedShape;
@@ -101,7 +103,7 @@ public class Door extends Component {
 		return isOpen() ? OPEN_STYLE : ComponentStyle.DEFAULT_BLACK;
 	}
 
-	private boolean isOpen() {
+	public boolean isOpen() {
 		return open;
 	}
 

@@ -13,6 +13,9 @@ import fr.tp.inf112.projects.robotsim.model.shapes.PositionedShape;
 import fr.tp.inf112.projects.robotsim.model.shapes.RectangularShape;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 public class Factory extends Component implements Canvas, Observable {
 
 	private static final long serialVersionUID = 5156526483612458192L;
@@ -96,7 +99,7 @@ public class Factory extends Component implements Canvas, Observable {
 		return false;
 	}
 
-	protected List<Component> getComponents() {
+	public List<Component> getComponents() {
 		return components;
 	}
 

@@ -35,4 +35,8 @@ public class CircularShape extends PositionedShape implements OvalShape {
 	public String toString() {
 		return super.toString() + " [radius=" + radius + "]";
 	}
+
+	public int getRadius() {
+		return radius;
+	}
 }

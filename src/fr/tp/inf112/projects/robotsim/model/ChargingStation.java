@@ -1,5 +1,7 @@
 package fr.tp.inf112.projects.robotsim.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import fr.tp.inf112.projects.robotsim.model.shapes.PositionedShape;
 import fr.tp.inf112.projects.robotsim.model.shapes.RectangularShape;
 
@@ -32,7 +34,7 @@ public class ChargingStation extends Component {
 		return super.toString() + "]";
 	}
 
-	protected boolean isCharging() {
+	public boolean isCharging() {
 		return charging;
 	}
 

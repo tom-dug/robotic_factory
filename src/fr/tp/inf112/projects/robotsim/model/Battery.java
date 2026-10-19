@@ -35,4 +35,12 @@ public class Battery implements Serializable {
 	public String toString() {
 		return "Battery [capacity=" + capacity + "]";
 	}
+
+	public float getLevel() {
+		return level;
+	}
+
+	public float getCapacity() {
+		return capacity;
+	}
 }

@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.canvas.model.impl.RGBColor;
 import fr.tp.inf112.projects.robotsim.model.motion.Motion;
@@ -71,7 +73,7 @@ public class Robot extends Component {
 		return super.toString() + " battery=" + battery + "]";
 	}
 
-	protected int getSpeed() {
+	public int getSpeed() {
 		return speed;
 	}
 
@@ -83,7 +85,7 @@ public class Robot extends Component {
 		return blockedTargetPosition;
 	}
 
-	private List<Component> getTargetComponents() {
+	public List<Component> getTargetComponents() {
 		if (targetComponents == null) {
 			targetComponents = new ArrayList<>();
 		}
@@ -288,5 +290,9 @@ public class Robot extends Component {
 	@Override
 	public Style getStyle() {
 		return blocked ? BLOCKED_STYLE : STYLE;
+	}
+
+	public Battery getBattery() {
+		return battery;
 	}
 }
