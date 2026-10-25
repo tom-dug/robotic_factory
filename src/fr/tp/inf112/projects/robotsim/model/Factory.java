@@ -16,6 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 public class Factory extends Component implements Canvas, Observable {
 
@@ -23,9 +24,10 @@ public class Factory extends Component implements Canvas, Observable {
 
 	private static final ComponentStyle DEFAULT = new ComponentStyle(5.0f);
 
+	@JsonManagedReference
 	private final List<Component> components;
 
-	@JsonIgnore 
+	@JsonIgnore
 	private transient List<Observer> observers;
 
 	private transient boolean simulationStarted;
