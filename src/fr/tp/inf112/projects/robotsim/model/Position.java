@@ -19,7 +19,7 @@ public class Position implements Serializable {
 	}
 
 	public Position() {
-		this(0, 0);
+		this(-1, -1);
 	}
 
 	public int getxCoordinate() {

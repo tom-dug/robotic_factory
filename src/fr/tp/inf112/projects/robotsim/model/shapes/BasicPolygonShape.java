@@ -3,6 +3,8 @@ package fr.tp.inf112.projects.robotsim.model.shapes;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fr.tp.inf112.projects.canvas.model.Point;
 import fr.tp.inf112.projects.canvas.model.PolygonShape;
 
@@ -44,6 +46,7 @@ public class BasicPolygonShape extends PositionedShape implements PolygonShape {
 		setyCoordinate(minyCoordinate);
 	}
 	
+	@JsonIgnore
 	@Override
 	public int getWidth() {
 		int minCoordinate = Integer.MAX_VALUE;
@@ -59,6 +62,7 @@ public class BasicPolygonShape extends PositionedShape implements PolygonShape {
 		return maxCoordinate - minCoordinate;
 	}
 
+	@JsonIgnore
 	@Override
 	public int getHeight() {
 		int minCoordinate = Integer.MAX_VALUE;

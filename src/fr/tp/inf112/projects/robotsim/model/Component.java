@@ -2,6 +2,8 @@ package fr.tp.inf112.projects.robotsim.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fr.tp.inf112.projects.canvas.model.Figure;
 import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.robotsim.model.shapes.PositionedShape;
@@ -47,6 +49,7 @@ public abstract class Component implements Figure, Serializable, Runnable {
 		return positionedShape;
 	}
 
+	@JsonIgnore
 	public Position getPosition() {
 		PositionedShape shape = getPositionedShape();
 		return shape == null ? null : shape.getPosition();
@@ -56,6 +59,7 @@ public abstract class Component implements Figure, Serializable, Runnable {
 		return factory;
 	}
 
+	@JsonIgnore
 	@Override
 	public int getxCoordinate() {
 		PositionedShape shape = getPositionedShape();
@@ -77,6 +81,7 @@ public abstract class Component implements Figure, Serializable, Runnable {
 		return false;
 	}
 
+	@JsonIgnore
 	@Override
 	public int getyCoordinate() {
 		PositionedShape shape = getPositionedShape();
@@ -118,11 +123,13 @@ public abstract class Component implements Figure, Serializable, Runnable {
 				+ ", shape=" + getPositionedShape();
 	}
 
+	@JsonIgnore
 	public int getWidth() {
 		PositionedShape posShape = getPositionedShape();
 		return posShape == null ? 0 : posShape.getWidth();
 	}
 
+	@JsonIgnore
 	public int getHeight() {
 		PositionedShape posShape = getPositionedShape();
 		return posShape == null ? 0 : posShape.getHeight();
@@ -132,6 +139,7 @@ public abstract class Component implements Figure, Serializable, Runnable {
 		return false;
 	}
 
+	@JsonIgnore
 	public boolean isMobile() {
 		return false;
 	}
@@ -149,16 +157,19 @@ public abstract class Component implements Figure, Serializable, Runnable {
 		return false;
 	}
 
+	@JsonIgnore
 	@Override
 	public Style getStyle() {
 		return ComponentStyle.DEFAULT;
 	}
 
+	@JsonIgnore
 	@Override
 	public Shape getShape() {
 		return getPositionedShape();
 	}
 
+	@JsonIgnore
 	public boolean isSimulationStarted() {
 		Factory factory = getFactory();
 		return factory == null ? false : factory.isSimulationStarted();

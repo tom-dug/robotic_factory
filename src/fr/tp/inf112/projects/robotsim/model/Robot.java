@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import fr.tp.inf112.projects.canvas.model.Style;
 import fr.tp.inf112.projects.canvas.model.impl.RGBColor;
@@ -31,12 +32,15 @@ public class Robot extends Component {
 
 	private List<Component> targetComponents;
 
+	@JsonIgnore
 	private transient Iterator<Component> targetComponentsIterator;
 
 	private Component currTargetComponent;
 
+	@JsonIgnore
 	private transient Iterator<Position> currentPathPositionsIter;
 
+	@JsonIgnore
 	private transient boolean blocked;
 
 	private Position blockedTargetPosition;

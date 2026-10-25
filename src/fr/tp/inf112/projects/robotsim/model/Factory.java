@@ -15,6 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Factory extends Component implements Canvas, Observable {
 
@@ -24,6 +25,7 @@ public class Factory extends Component implements Canvas, Observable {
 
 	private final List<Component> components;
 
+	@JsonIgnore 
 	private transient List<Observer> observers;
 
 	private transient boolean simulationStarted;
@@ -103,6 +105,7 @@ public class Factory extends Component implements Canvas, Observable {
 		return components;
 	}
 
+	@JsonIgnore
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Collection<Figure> getFigures() {
@@ -181,6 +184,7 @@ public class Factory extends Component implements Canvas, Observable {
 		return false;
 	}
 
+	@JsonIgnore
 	public Component getMobileComponentAt(final Position position,
 			final Component ignoredComponent) {
 		if (position == null) {
@@ -191,6 +195,7 @@ public class Factory extends Component implements Canvas, Observable {
 				ignoredComponent);
 	}
 
+	@JsonIgnore
 	public Component getMobileComponentAt(final PositionedShape shape,
 			final Component ignoredComponent) {
 		if (shape == null) {
@@ -206,6 +211,7 @@ public class Factory extends Component implements Canvas, Observable {
 		return null;
 	}
 
+	@JsonIgnore
 	public ReentrantLock[][] getLocksMap() {
 		return locksMap;
 	}
