@@ -44,4 +44,8 @@ public class Area extends Component {
 	public Style getStyle() {
 		return STYLE;
 	}
+
+	public Machine getMachine() {
+		return machine;
+	}
 }

@@ -1,5 +1,7 @@
 package fr.tp.inf112.projects.robotsim.app;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
@@ -70,6 +72,7 @@ public class TestRobotSimSerializationJSON {
         LOGGER.info(factoryAsJsonString);
         final Factory roundTrip = objectMapper.readValue(factoryAsJsonString, Factory.class);
         LOGGER.info(roundTrip.toString());
+        assertEquals(myFactory.getComponents().toString(), roundTrip.getComponents().toString());
     }
 
 }

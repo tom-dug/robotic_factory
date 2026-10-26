@@ -268,6 +268,7 @@ public class Robot extends Component {
 		return null;
 	}
 
+	@JsonIgnore
 	public boolean isLivelyLocked() {
 		if (blockedTargetPosition == null) {
 			return false;
