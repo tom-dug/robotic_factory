@@ -2,6 +2,7 @@ package fr.tp.inf112.projects.robotsim.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import fr.tp.inf112.projects.canvas.model.Figure;
@@ -15,6 +16,7 @@ public abstract class Component implements Figure, Serializable, Runnable {
 
 	private String id;
 
+	@JsonBackReference
 	private final Factory factory;
 
 	private final PositionedShape positionedShape;
