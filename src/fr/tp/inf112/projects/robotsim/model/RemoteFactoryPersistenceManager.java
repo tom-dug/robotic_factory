@@ -49,12 +49,10 @@ public class RemoteFactoryPersistenceManager extends AbstractCanvasPersistenceMa
         }
     };
 
-
     public void persist(Canvas canvas) {
         try (Socket socket = new Socket(host, port);
-                ObjectInputStream ObjInStr = new ObjectInputStream(socket.getInputStream());
                 ObjectOutputStream ObjOutStr = new ObjectOutputStream(socket.getOutputStream());
-        ) {
+                ObjectInputStream ObjInStr = new ObjectInputStream(socket.getInputStream());) {
             // TODO : InputStream not needed ?
             ObjOutStr.flush();
 
@@ -62,7 +60,7 @@ public class RemoteFactoryPersistenceManager extends AbstractCanvasPersistenceMa
             ObjOutStr.flush();
 
             LOGGER.log(Level.FINE, "Tentative de persist complétée");
-            
+
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "Persist error : ", e);
         }

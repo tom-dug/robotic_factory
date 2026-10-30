@@ -28,7 +28,7 @@ public class RemoteFileCanvasChooser extends FileCanvasChooser {
     protected String browseCanvases(final boolean open) {
         if (open) {
             String[] filesAvailable = filesList();
-            
+
             if (filesAvailable.length == 0) {
                 return null;
             }
@@ -38,7 +38,7 @@ public class RemoteFileCanvasChooser extends FileCanvasChooser {
                 return chosenFile;
             }
         }
-        
+
         else {
             String userInput = JOptionPane.showInputDialog(null);
             return userInput;
@@ -47,8 +47,8 @@ public class RemoteFileCanvasChooser extends FileCanvasChooser {
 
     private String[] filesList() {
         try (Socket socket = new Socket(host, port);
-                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());) {
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());) {
             oos.flush();
 
             oos.writeObject("LIST");
