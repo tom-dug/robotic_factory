@@ -30,7 +30,7 @@ public class Factory extends Component implements Canvas, Observable {
 	@JsonIgnore
 	private transient List<Observer> observers;
 
-	private transient boolean simulationStarted;
+	private boolean simulationStarted;
 
 	private int pathResolution;
 
@@ -59,7 +59,7 @@ public class Factory extends Component implements Canvas, Observable {
 		this(0, 0, null, 1);
 	}
 
-	protected List<Observer> getObservers() {
+	public List<Observer> getObservers() {
 		if (observers == null) {
 			observers = new ArrayList<>();
 		}
@@ -77,7 +77,7 @@ public class Factory extends Component implements Canvas, Observable {
 		return getObservers().remove(observer);
 	}
 
-	protected void notifyObservers() {
+	public void notifyObservers() {
 		for (final Observer observer : getObservers()) {
 			observer.modelChanged();
 		}
