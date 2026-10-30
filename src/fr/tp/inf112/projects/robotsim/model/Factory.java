@@ -127,8 +127,13 @@ public class Factory extends Component implements Canvas, Observable {
 		return super.toString() + " components=" + components + "]";
 	}
 
+	@JsonGetter("simulationStarted")
 	public boolean isSimulationStarted() {
 		return simulationStarted;
+	}
+
+	public void setSimulationStarted(boolean simulationStarted) {
+		this.simulationStarted = simulationStarted;
 	}
 
 	public void startSimulation() {

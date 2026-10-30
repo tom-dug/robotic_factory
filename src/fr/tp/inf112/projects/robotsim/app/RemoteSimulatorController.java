@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 
 import fr.tp.inf112.projects.canvas.model.Canvas;
 import fr.tp.inf112.projects.canvas.model.CanvasPersistenceManager;
+import fr.tp.inf112.projects.canvas.model.impl.BasicPoint;
 import fr.tp.inf112.projects.graph.impl.BasicVertex;
 import fr.tp.inf112.projects.robotsim.model.Component;
 import fr.tp.inf112.projects.robotsim.model.Factory;
@@ -42,6 +43,7 @@ public class RemoteSimulatorController extends SimulatorController {
                 .allowIfSubType(PositionedShape.class.getPackageName())
                 .allowIfSubType(Component.class.getPackageName())
                 .allowIfSubType(BasicVertex.class.getPackageName())
+                .allowIfSubType(BasicPoint.class.getPackageName())
                 .allowIfSubType(ArrayList.class.getName())
                 .allowIfSubType(LinkedHashSet.class.getName())
                 .build();

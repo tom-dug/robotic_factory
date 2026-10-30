@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 import fr.tp.inf112.projects.canvas.model.Canvas;
@@ -25,15 +26,15 @@ public class SimulatorPersistenceServer implements Runnable {
 
     @Override
     public void run() {
-        try (   ObjectOutputStream objOutStr = new ObjectOutputStream(socket.getOutputStream());
+        try (ObjectOutputStream objOutStr = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream objInStr = new ObjectInputStream(socket.getInputStream());) {
             Object receivedObj = objInStr.readObject();
 
             if (receivedObj instanceof String) {
                 String identifier = (String) receivedObj;
                 if (identifier.equals("LIST")) {
-                    // Used to display the list of available 
-                    // Creating a file object to get all present file's names 
+                    // Used to display the list of available
+                    // Creating a file object to get all present file's names
                     File f = new File(".");
                     String[] files = f.list();
                     objOutStr.writeObject(files);
@@ -65,5 +66,21 @@ public class SimulatorPersistenceServer implements Runnable {
             }
         }
 
+    }
+
+    public static void main(String[] args) {
+        try (ServerSocket serverSocket = new ServerSocket(8081)) {
+            while (true) {
+                try {
+                    Socket socket = serverSocket.accept();
+                    Runnable reqProcessor = new SimulatorPersistenceServer(socket);
+                    new Thread(reqProcessor).start();
+                } catch (IOException e) {
+                    LOGGER.log(Level.SEVERE, "Erreur avec une nouvelle connexion : " + e);
+                }
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Erreur de démarrage d'un serverSocket : " + e);
+        }
     }
 }

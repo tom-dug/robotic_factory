@@ -88,8 +88,8 @@ public class SimulatorApplication {
 			  
 			@Override
 	        public void run() {
-				final RemoteFileCanvasChooser canvasChooser = new RemoteFileCanvasChooser("factory", "Puck Factory", "localhost", 8080);
-				final Component factoryViewer = new CanvasViewer(new SimulatorController(factory, new RemoteFactoryPersistenceManager(canvasChooser, "localhost", 8080)));
+				final RemoteFileCanvasChooser canvasChooser = new RemoteFileCanvasChooser("factory", "Puck Factory", "localhost", 8081);
+				final Component factoryViewer = new CanvasViewer(new RemoteSimulatorController(factory, new RemoteFactoryPersistenceManager(canvasChooser, "localhost", 8081)));
 				canvasChooser.setViewer(factoryViewer);
 				//new CanvasViewer(factory);
 			}

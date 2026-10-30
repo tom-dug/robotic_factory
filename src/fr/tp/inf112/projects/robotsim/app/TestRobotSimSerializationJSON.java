@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 
+import fr.tp.inf112.projects.canvas.model.impl.BasicPoint;
 import fr.tp.inf112.projects.graph.impl.BasicVertex;
 import fr.tp.inf112.projects.robotsim.model.Area;
 import fr.tp.inf112.projects.robotsim.model.Battery;
@@ -43,6 +44,7 @@ public class TestRobotSimSerializationJSON {
                 .allowIfSubType(PositionedShape.class.getPackageName())
                 .allowIfSubType(Component.class.getPackageName())
                 .allowIfSubType(BasicVertex.class.getPackageName())
+                .allowIfSubType(BasicPoint.class.getPackageName())
                 .allowIfSubType(ArrayList.class.getName())
                 .allowIfSubType(LinkedHashSet.class.getName())
                 .build();
