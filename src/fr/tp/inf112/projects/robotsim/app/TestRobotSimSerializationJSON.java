@@ -56,7 +56,20 @@ public class TestRobotSimSerializationJSON {
         final Area area1 = new Area(room1, new RectangularShape(35, 35, 50, 50), "Production Area 1");
         final Machine machine1 = new Machine(area1, new RectangularShape(50, 50, 15, 15), "Machine 1");
 
+        final int baselineSize = 3;
+		final int xCoordinate = 10;
+		final int yCoordinate = 165;
+		final int width =  10;
+		final int height = 30;
         final BasicPolygonShape conveyorShape = new BasicPolygonShape();
+        conveyorShape.addPoint(new BasicPoint(xCoordinate, yCoordinate));
+		conveyorShape.addPoint(new BasicPoint(xCoordinate + width, yCoordinate));
+		conveyorShape.addPoint(new BasicPoint(xCoordinate + width, yCoordinate + height - baselineSize));
+		conveyorShape.addPoint(new BasicPoint(xCoordinate + width + baselineSize, yCoordinate + height - baselineSize));
+		conveyorShape.addPoint(new BasicPoint(xCoordinate + width + baselineSize, yCoordinate + height));
+		conveyorShape.addPoint(new BasicPoint(xCoordinate - baselineSize, yCoordinate + height));
+		conveyorShape.addPoint(new BasicPoint(xCoordinate - baselineSize, yCoordinate + height - baselineSize));
+		conveyorShape.addPoint(new BasicPoint(xCoordinate, yCoordinate + height - baselineSize));
         final Conveyor conveyor1 = new Conveyor(myFactory, conveyorShape, "Conveyor 1");
 
 		final Room chargingRoom = new Room(myFactory, new RectangularShape(125, 125, 50, 50), "Charging Room");
@@ -86,4 +99,8 @@ public class TestRobotSimSerializationJSON {
         return roundTrip;
     }
 
+    public Factory getTestFactory() {
+        // To test and see if the robot works in this factory without the round trip
+        return myFactory;
+    }
 }
