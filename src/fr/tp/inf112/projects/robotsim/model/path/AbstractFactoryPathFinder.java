@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import fr.tp.inf112.projects.robotsim.model.Factory;
@@ -21,6 +22,7 @@ public abstract class AbstractFactoryPathFinder<Graph, Vertex> implements Factor
 	 */
 	private static final long serialVersionUID = 3864762720560889146L;
 
+	@JsonBackReference
 	private final Factory factoryModel;
 	
 	private final int resolution;
