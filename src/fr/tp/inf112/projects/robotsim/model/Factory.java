@@ -220,6 +220,17 @@ public class Factory extends Component implements Canvas, Observable {
 
 	@JsonIgnore
 	public ReentrantLock[][] getLocksMap() {
+		if (locksMap == null || locksMap.length == 0) {
+			int rows = getHeight() / pathResolution;
+			int cols = getWidth() / pathResolution;
+			locksMap = new ReentrantLock[rows][cols];
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
+					locksMap[i][j] = new ReentrantLock();
+				}
+			}
+			return locksMap;
+		}
 		return locksMap;
 	}
 }

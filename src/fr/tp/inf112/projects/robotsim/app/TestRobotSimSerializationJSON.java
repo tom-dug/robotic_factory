@@ -54,7 +54,7 @@ public class TestRobotSimSerializationJSON {
         final Room room1 = new Room(myFactory, new RectangularShape(20, 20, 75, 75), "Production Room 1");
         new Door(room1, Room.WALL.BOTTOM, 10, 20, true, "Entrance");
         final Area area1 = new Area(room1, new RectangularShape(35, 35, 50, 50), "Production Area 1");
-        new Machine(area1, new RectangularShape(50, 50, 15, 15), "Machine 1");
+        final Machine machine1 = new Machine(area1, new RectangularShape(50, 50, 15, 15), "Machine 1");
 
         final BasicPolygonShape conveyorShape = new BasicPolygonShape();
         final Conveyor conveyor1 = new Conveyor(myFactory, conveyorShape, "Conveyor 1");
@@ -66,6 +66,9 @@ public class TestRobotSimSerializationJSON {
 		final int factoryPathResolution = myFactory.getPathResolution();
 		final FactoryPathFinder jgraphPahtFinder = new JGraphTDijkstraFactoryPathFinder(myFactory, factoryPathResolution);
         final Robot robot1 = new Robot(myFactory, jgraphPahtFinder, new CircularShape(5, 5, 2), new Battery(10), "Robot 1");
+        robot1.addTargetComponent(machine1);
+        robot1.addTargetComponent(conveyor1);
+        robot1.addTargetComponent(chargingStation);
     }
 
     @Test
@@ -75,6 +78,12 @@ public class TestRobotSimSerializationJSON {
         final Factory roundTrip = objectMapper.readValue(factoryAsJsonString, Factory.class);
         LOGGER.info(roundTrip.toString());
         assertEquals(myFactory.getComponents().toString(), roundTrip.getComponents().toString());
+    }
+
+    public Factory getRoundTripFactory() throws JsonProcessingException {
+        final String factoryAsJsonString = objectMapper.writeValueAsString(myFactory);
+        final Factory roundTrip = objectMapper.readValue(factoryAsJsonString, Factory.class);
+        return roundTrip;
     }
 
 }

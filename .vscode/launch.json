@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SimulatorPersistenceServer",
+            "request": "launch",
+            "mainClass": "fr.tp.inf112.projects.robotsim.model.SimulatorPersistenceServer",
+            "projectName": "fr.tp.inf112.projects.robotsim"
+        },
+        {
+            "type": "java",
             "name": "SimulatorApplication",
             "request": "launch",
             "mainClass": "fr.tp.inf112.projects.robotsim.app.SimulatorApplication",

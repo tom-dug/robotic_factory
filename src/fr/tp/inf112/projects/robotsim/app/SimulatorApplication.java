@@ -5,6 +5,10 @@ import java.util.Arrays;
 
 import javax.swing.SwingUtilities;
 
+import org.junit.Test;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import fr.tp.inf112.projects.canvas.model.impl.BasicPoint;
 import fr.tp.inf112.projects.canvas.view.CanvasViewer;
 import fr.tp.inf112.projects.canvas.view.FileCanvasChooser;
@@ -25,6 +29,7 @@ import fr.tp.inf112.projects.robotsim.model.shapes.BasicPolygonShape;
 import fr.tp.inf112.projects.robotsim.model.shapes.CircularShape;
 import fr.tp.inf112.projects.robotsim.model.shapes.RectangularShape;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.tp.inf112.projects.robotsim.model.RemoteFactoryPersistenceManager;
@@ -88,9 +93,16 @@ public class SimulatorApplication {
 			  
 			@Override
 	        public void run() {
-				final RemoteFileCanvasChooser canvasChooser = new RemoteFileCanvasChooser("factory", "Puck Factory", "localhost", 8081);
-				final Component factoryViewer = new CanvasViewer(new RemoteSimulatorController(factory, new RemoteFactoryPersistenceManager(canvasChooser, "localhost", 8081)));
-				canvasChooser.setViewer(factoryViewer);
+				final FileCanvasChooser canvasChooser = new FileCanvasChooser("factory", "Puck Factory");
+				final TestRobotSimSerializationJSON testSim = new TestRobotSimSerializationJSON();
+				try {
+					Factory factory = testSim.getRoundTripFactory();
+					final Component factoryViewer = new CanvasViewer(new SimulatorController(factory, new FactoryPersistenceManager(canvasChooser)));
+					canvasChooser.setViewer(factoryViewer);
+				} catch (JsonProcessingException e) {
+					LOGGER.log(Level.SEVERE, "Error starting the simulation : " + e);
+				}
+				
 				//new CanvasViewer(factory);
 			}
 		});
