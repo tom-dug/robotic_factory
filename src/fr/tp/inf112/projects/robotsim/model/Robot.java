@@ -301,4 +301,8 @@ public class Robot extends Component {
 	public Battery getBattery() {
 		return battery;
 	}
+
+	public FactoryPathFinder getPathFinder() {
+		return pathFinder;
+	}
 }

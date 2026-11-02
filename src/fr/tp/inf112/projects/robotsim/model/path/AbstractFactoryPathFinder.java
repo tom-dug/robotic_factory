@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fr.tp.inf112.projects.robotsim.model.Factory;
 import fr.tp.inf112.projects.robotsim.model.Position;
 import fr.tp.inf112.projects.robotsim.model.shapes.PositionedShape;
@@ -32,6 +34,10 @@ public abstract class AbstractFactoryPathFinder<Graph, Vertex> implements Factor
 		graph = null;
 	}
 
+	public AbstractFactoryPathFinder() {
+		this(null, 0);
+	}
+
 	public Factory getFactoryModel() {
 		return factoryModel;
 	}
@@ -40,6 +46,7 @@ public abstract class AbstractFactoryPathFinder<Graph, Vertex> implements Factor
 		return resolution;
 	}
 	
+	@JsonIgnore
 	protected Graph getGraph() {
 		return graph;
 	}
