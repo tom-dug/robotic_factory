@@ -15,6 +15,16 @@
             "mainClass": "fr.tp.inf112.projects.robotsim.app.SimulatorApplication",
             "projectName": "fr.tp.inf112.projects.robotsim",
             "vmArgs": "-Djava.util.logging.config.file=config/logging.properties"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SimulatorPersistenceServer<robotsim-simulation-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "fr.tp.inf112.projects.robotsim.model.SimulatorPersistenceServer",
+            "projectName": "robotsim-simulation-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

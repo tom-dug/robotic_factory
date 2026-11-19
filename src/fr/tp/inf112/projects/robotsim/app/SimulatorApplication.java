@@ -5,8 +5,6 @@ import java.util.Arrays;
 
 import javax.swing.SwingUtilities;
 
-import org.junit.Test;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import fr.tp.inf112.projects.canvas.model.impl.BasicPoint;
