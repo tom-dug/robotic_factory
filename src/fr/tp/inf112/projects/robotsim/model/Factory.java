@@ -64,6 +64,7 @@ public class Factory extends Component implements Canvas, Observable {
 		this(0, 0, null, 1);
 	}
 
+	@JsonIgnore 
 	public FactoryModelChangedNotifier getNotifier() {
 		if (notifier == null) {
 			notifier = new LocalFactoryModelChangedNotifier();

@@ -21,6 +21,8 @@ import fr.tp.inf112.projects.canvas.model.impl.BasicPoint;
 import fr.tp.inf112.projects.graph.impl.BasicVertex;
 import fr.tp.inf112.projects.robotsim.model.Component;
 import fr.tp.inf112.projects.robotsim.model.Factory;
+import fr.tp.inf112.projects.robotsim.model.FactoryModelChangedNotifier;
+import fr.tp.inf112.projects.robotsim.model.LocalFactoryModelChangedNotifier;
 import fr.tp.inf112.projects.robotsim.model.shapes.PositionedShape;
 
 import fr.tp.inf112.projects.canvas.controller.Observer;
@@ -30,6 +32,8 @@ public class RemoteSimulatorController extends SimulatorController {
 
     private Factory factory;
     private final ObjectMapper objectMapper;
+
+    private final FactoryModelChangedNotifier notifier = new LocalFactoryModelChangedNotifier();
 
     public RemoteSimulatorController(final CanvasPersistenceManager persistenceManager) {
         this(null, persistenceManager);
@@ -63,21 +67,23 @@ public class RemoteSimulatorController extends SimulatorController {
     }
 
     private void updateViewer() throws InterruptedException, URISyntaxException, IOException {
-        while (((Factory) getCanvas()).isSimulationStarted()) {
-            Factory remoteFactoryModel = getFactory();
-            setCanvas(remoteFactoryModel);
-            Thread.sleep(100);
-        }
+        final FactorySimulationEventConsumer consumer = new FactorySimulationEventConsumer(this);
+        consumer.consumeMessages();
     }
 
     @Override
     public void setCanvas(final Canvas canvasModel) {
-        final List<Observer> observers = ((Factory) getCanvas()).getObservers();
         super.setCanvas(canvasModel);
-        for (final Observer observer : observers) {
-            ((Factory) getCanvas()).addObserver(observer);
+        notifier.notifyObservers();
+    }
+
+    public void setCanvas(final String factoryAsJsonString) {
+        try {
+            final Factory factoryModel = objectMapper.readValue(factoryAsJsonString, Factory.class);
+            setCanvas(factoryModel);
+        } catch (IOException e) {
+            LOGGER.warning("Error deserializing Factory JSON: " + e.getMessage());
         }
-        ((Factory) getCanvas()).notifyObservers();
     }
 
     @Override
@@ -115,5 +121,15 @@ public class RemoteSimulatorController extends SimulatorController {
         } catch (Exception e) {
             LOGGER.warning("Error stopping the animation: " + e.getMessage());
         }
+    }
+
+    @Override
+    public boolean addObserver(final Observer observer) {
+        return notifier.addObserver(observer);
+    }
+
+    @Override
+    public boolean removeObserver(final Observer observer) {
+        return notifier.removeObserver(observer);
     }
 }

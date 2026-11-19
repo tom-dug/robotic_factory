@@ -15,4 +15,6 @@
 	<classpathentry kind="lib" path="libs/jackson-core-2.17.2.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-databind-2.17.2.jar"/>
 	<classpathentry kind="lib" path="libs/junit-platform-console-standalone-1.10.2.jar"/>
+	<classpathentry kind="lib" path="libs/kafka-clients-3.7.1.jar"/>
+	<classpathentry kind="lib" path="libs/slf4j-api-2.0.16.jar"/>
 </classpath>

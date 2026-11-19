@@ -171,8 +171,7 @@ public abstract class Component implements Figure, Serializable, Runnable {
 		return getPositionedShape();
 	}
 
-	@JsonIgnore
-	public boolean isSimulationStarted() {
+	protected boolean isSimulationStarted() {
 		Factory factory = getFactory();
 		return factory == null ? false : factory.isSimulationStarted();
 	}
