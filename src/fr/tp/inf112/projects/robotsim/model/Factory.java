@@ -28,6 +28,9 @@ public class Factory extends Component implements Canvas, Observable {
 	private final List<Component> components;
 
 	@JsonIgnore
+	private transient FactoryModelChangedNotifier notifier;
+
+	@JsonIgnore
 	private transient List<Observer> observers;
 
 	private boolean simulationStarted;
@@ -46,10 +49,12 @@ public class Factory extends Component implements Canvas, Observable {
 		components = new ArrayList<>();
 		observers = null;
 		simulationStarted = false;
-		locksMap = new ReentrantLock[height/pathResolution][width/pathResolution];
+		locksMap = new ReentrantLock[height / pathResolution][width / pathResolution];
 
-		for (int i = 0; i < height/pathResolution; i++) {
-			for (int j = 0; j < width/pathResolution; j++) {
+		notifier = new LocalFactoryModelChangedNotifier();
+
+		for (int i = 0; i < height / pathResolution; i++) {
+			for (int j = 0; j < width / pathResolution; j++) {
 				locksMap[i][j] = new ReentrantLock();
 			}
 		}
@@ -57,6 +62,17 @@ public class Factory extends Component implements Canvas, Observable {
 
 	public Factory() {
 		this(0, 0, null, 1);
+	}
+
+	public FactoryModelChangedNotifier getNotifier() {
+		if (notifier == null) {
+			notifier = new LocalFactoryModelChangedNotifier();
+		}
+		return notifier;
+	}
+
+	public void setNotifier(final FactoryModelChangedNotifier notifier) {
+		this.notifier = notifier;
 	}
 
 	public List<Observer> getObservers() {
@@ -69,18 +85,19 @@ public class Factory extends Component implements Canvas, Observable {
 
 	@Override
 	public boolean addObserver(Observer observer) {
-		return getObservers().add(observer);
+		notifier = getNotifier();
+		return notifier.addObserver(observer);
 	}
 
 	@Override
 	public boolean removeObserver(Observer observer) {
-		return getObservers().remove(observer);
+		notifier = getNotifier();
+		return notifier.removeObserver(observer);
 	}
 
 	public void notifyObservers() {
-		for (final Observer observer : getObservers()) {
-			observer.modelChanged();
-		}
+		notifier = getNotifier();
+		notifier.notifyObservers();
 	}
 
 	public boolean addComponent(final Component component) {

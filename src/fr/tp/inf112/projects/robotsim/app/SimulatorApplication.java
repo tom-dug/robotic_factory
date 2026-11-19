@@ -95,13 +95,8 @@ public class SimulatorApplication {
 	        public void run() {
 				final FileCanvasChooser canvasChooser = new FileCanvasChooser("factory", "Puck Factory");
 				final TestRobotSimSerializationJSON testSim = new TestRobotSimSerializationJSON();
-				try {
-					Factory factory = testSim.getRoundTripFactory();
-					final Component factoryViewer = new CanvasViewer(new SimulatorController(factory, new FactoryPersistenceManager(canvasChooser)));
-					canvasChooser.setViewer(factoryViewer);
-				} catch (JsonProcessingException e) {
-					LOGGER.log(Level.SEVERE, "Error starting the simulation : " + e);
-				}
+				final Component factoryViewer = new CanvasViewer(new SimulatorController(factory, new FactoryPersistenceManager(canvasChooser)));
+				canvasChooser.setViewer(factoryViewer);
 				
 				//new CanvasViewer(factory);
 			}
