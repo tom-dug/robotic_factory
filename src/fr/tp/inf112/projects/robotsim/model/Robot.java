@@ -216,6 +216,7 @@ public class Robot extends Component {
 	}
 
 	private void computePathToCurrentTargetComponent() {
+		pathFinder.setFactoryModel(getFactory());
 		final List<Position> currentPathPositions = pathFinder.findPath(this, currTargetComponent);
 		currentPathPositionsIter = currentPathPositions.iterator();
 	}

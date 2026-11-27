@@ -96,4 +96,20 @@ public class Room extends Component {
 	public String toString() {
 		return super.toString() + " areas=" + areas + "]";
 	}
+
+	public PositionedShape getLeftWall() {
+		return leftWall;
+	}
+
+	public PositionedShape getRightWall() {
+		return rightWall;
+	}
+
+	public PositionedShape getTopWall() {
+		return topWall;
+	}
+
+	public PositionedShape getBottomWall() {
+		return bottomWall;
+	}
 }
