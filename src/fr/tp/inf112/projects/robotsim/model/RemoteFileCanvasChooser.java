@@ -34,7 +34,13 @@ public class RemoteFileCanvasChooser extends FileCanvasChooser {
             }
 
             else {
-                String chosenFile = JOptionPane.showInputDialog("Choisir un fichier", filesAvailable);
+                String chosenFile = (String) JOptionPane.showInputDialog(null,
+                        "Choisir un fichier",
+                        "Input",
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        filesAvailable,
+                        filesAvailable[0]);
                 return chosenFile;
             }
         }
